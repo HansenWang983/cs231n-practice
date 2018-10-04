@@ -111,6 +111,7 @@ class KNearestNeighbor(object):
     """
     num_test = X.shape[0]
     num_train = self.X_train.shape[0]
+    # 500*5000
     dists = np.zeros((num_test, num_train)) 
     #########################################################################
     # TODO:                                                                 #
@@ -125,8 +126,11 @@ class KNearestNeighbor(object):
     #       and two broadcast sums.                                         #
     #########################################################################
     pass
+    # 每一张训练图片所有像素RGB值的平方和
     dists += np.sum(self.X_train ** 2, axis=1).reshape(1, num_train)
+    # 每一张测试图片所有像素RGB值的平方和
     dists += np.sum(X ** 2, axis=1).reshape(num_test, 1) # reshape for broadcasting
+    #此时dist(i,j)表示第i张测试图片与第j张训练图片所有像素RGB值的平方和
     dists -= 2 * np.dot(X, self.X_train.T)
     dists = np.sqrt(dists)
     #########################################################################
